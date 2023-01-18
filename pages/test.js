@@ -9,7 +9,7 @@ import { printToFileAsync } from '../node_modules/expo-print/build/Print.js';
 import {shareAsync} from 'expo-sharing';
 import {AsyncStorage} from 'react-native';
 
-function Test({navigation}){
+function Test({onChange,navigation}){
   const [searchQuery, setSearchQuery] = React.useState('');
   const [myUserData,setMyUserData]=useState();
   const [isLoading,setIsLoading]=useState(true);
@@ -35,7 +35,7 @@ const storeData=async(details)=>{
     const query=searchQuery;
     try{
         const response=await fetch(
-            "https://vertex.plabesk.com/api/usman/search-data?cnic=3310069753732"
+            `https://7gxwzm6f2vdpe5562dvm7bg7re0aqtsh.lambda-url.eu-west-1.on.aws/search?cnic=${query}`
         );
         // console.log(await response.text())
         const myData=await response.json();
@@ -44,6 +44,8 @@ const storeData=async(details)=>{
             // console.log("my data= ",myData.response);
             setIsLoading(false);
             storeData(myData)
+            //sector,block_code,cnic,family_no
+            onChange(myData?.response?.sector,myData?.response?.block_code,myData?.response?.cnic,myData?.response?.silsila_no)
         }
         else{
             console.log("Error finding data");

@@ -1,12 +1,12 @@
-import React from "react";
-import {View,Text,StyleSheet,Button,Image,ScrollView,SafeAreaView, ImageBackground} from 'react-native';
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Button, Image, ScrollView, SafeAreaView, ImageBackground } from 'react-native';
 import CountryFlag from "react-native-country-flag";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Search from "./search";
 import Test from "./test";
-import DrawerNavigator  from "./menudrawer";
+import DrawerNavigator from "./menudrawer";
 import HomeScreen from "./homescreen";
-import {TouchableOpacity,Dimensions} from 'react-native';
+import { TouchableOpacity, Dimensions } from 'react-native';
 import Buttons from "./likebutton";
 import NadraData from "./nadradata";
 
@@ -70,7 +70,7 @@ import NadraData from "./nadradata";
 //                 <Nadracontent source={require('./images/nadraimg1.jpg')} tex='صنف'/>
 //                 <Buttons/>
 //             </View> */}
-            
+
 //         </ScrollView>
 //         <View><Text>{'\n'}</Text></View>
 //         <AppButton title={"Family Tree"} onPress={clickHandle} bgColor='#CA955C' textCol='white'/>
@@ -213,68 +213,80 @@ import NadraData from "./nadradata";
 
 
 
-function Home({navigation}){
+function Home({ navigation }) {
 
-  const AppButton = ({ onPress, title,bgColor,textCol }) => (
-      <TouchableOpacity onPress={onPress} style={[styles.appButtonContainer,{
-          backgroundColor:bgColor?bgColor : 'white',
-          marginLeft:0
-      }]}>
-        <Text style={[styles.appButtonText,{color:textCol?textCol:'white'}]}>{title}</Text>
-      </TouchableOpacity>
-    );
+  // sector,block_code,cnic,family_no
+    const [sector,setSector]=useState('')
+    const [block_code,setBlockCode]=useState('')
+    const [cnic,setCnic]=useState('')
+    const [family_no,setFamilyNo]=useState('')
 
-  const Nadracontent=(props)=>{
-      return(
-          <View style={{flexDirection:'row'}}>
-              <Image source={props.source} style={[styles.nadraimg1,{marginLeft:40}]}/>
-              <Text style={[styles.nadraT,{flex:1}]}>{props.tex}</Text>
-          </View>
-      )
+  const AppButton = ({ onPress, title, bgColor, textCol }) => (
+    <TouchableOpacity onPress={onPress} style={[styles.appButtonContainer, {
+      backgroundColor: bgColor ? bgColor : 'white',
+      marginLeft: 0
+    }]}>
+      <Text style={[styles.appButtonText, { color: textCol ? textCol : 'white' }]}>{title}</Text>
+    </TouchableOpacity>
+  );
+
+  const Nadracontent = (props) => {
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <Image source={props.source} style={[styles.nadraimg1, { marginLeft: 40 }]} />
+        <Text style={[styles.nadraT, { flex: 1 }]}>{props.tex}</Text>
+      </View>
+    )
   }
 
-  const clickHandle=()=>{
-      navigation.navigate('FamilyTree');
+  const clickHandle = () => {
+    navigation.navigate('FamilyTree');
   }
-  const onTest=()=>{
+  const onTest = () => {
     navigation.navigate('Test');
   }
 
-  return(
-  <SafeAreaView style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+  return (
+    <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       {/* <ScrollView showsVerticalScrollIndicator={false}> */}
-      <ImageBackground source={require('./images/homeimg.jpg') } style={styles.img}/>
+      <ImageBackground source={require('./images/homeimg.jpg')} style={styles.img} />
       <ScrollView contentContainerStyle={styles.contentContainer} showsVerticalScrollIndicator={false}>
-      <Text style={{fontWeight:'bold',fontSize:30,textAlign:'center',color:'white'}}>WELCOME USER</Text>
-      <Test/> 
-      <View>
+        <Text style={{ fontWeight: 'bold', fontSize: 30, textAlign: 'center', color: 'white' }}>WELCOME USER</Text>
+        <Test onChange={(sector,block_code,cnic,family_no) => {
+          console.log(sector,block_code,cnic,family_no);
+          setSector(sector)
+          setBlockCode(block_code)
+          setCnic(cnic)
+          setFamilyNo(family_no)
+        }} />
+        <View>
           <Text>
-              {'\n'}
+            {'\n'}
           </Text>
-      </View>
+        </View>
 
-      <ScrollView>
-        {/* <NadraData/> */}
+        <ScrollView>
+          {/* <NadraData/> */}
+        </ScrollView>
+        <AppButton title={"Family Tree"} onPress={clickHandle} bgColor='#0f9b0f' textCol='white' />
       </ScrollView>
-      <AppButton title={"Family Tree"} onPress={clickHandle} bgColor='#0f9b0f' textCol='white'/>
-  </ScrollView>
-  {/* </ScrollView> */}
-  </SafeAreaView>
-)
+      {/* </ScrollView> */}
+    </SafeAreaView>
+  )
 }
 
 export default Home;
 
-const styles=StyleSheet.create({
+const styles = StyleSheet.create({
   appButtonContainer: {
-      color:'green',
+    color: 'green',
     elevation: 8,
     backgroundColor: "#D9CB50",
     borderRadius: 20,
     paddingVertical: 2,
     paddingHorizontal: 4,
-    marginTop:-30,
-    width:130,
+    marginTop: -30,
+    width: 130,
   },
   appButtonText: {
     fontSize: 16,
@@ -283,48 +295,48 @@ const styles=StyleSheet.create({
     alignSelf: "center",
     textTransform: "uppercase"
   },
-  item:{
-      position:'absolute',
-      left:40,
-      top:150,
+  item: {
+    position: 'absolute',
+    left: 40,
+    top: 150,
   },
-  img:{
+  img: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,width:'100%',
+    height: Dimensions.get('window').height, width: '100%',
     flex: 1,
     justifyContent: 'center'
   },
   contentContainer: {
-      marginTop:"70%"
-    },
-    nadra:{
-      marginLeft:0,
-      marginRight:0,
-      marginBottom:10,
-      borderRadius:20,
-      textAlign:'right',
-      fontWeight:20,
-      marginTop:0,
-      backgroundColor:'silver',
-    },
-    nadraT:{
-      fontWeight:'bold',
-      fontSize:15,
-      marginBottom:20,
-      marginRight:20,
-      paddingLeft:0, 
-    },
-    nadraimg:{
-      width:40,
-      height:30,
-      padding:5,
-      margin:20,
-    },
-    nadraimg1:{
-      marginLeft:30,
-      width:160,
-      height:35,
-      marginBottom:10,
-      flexDirection:'row',
-    }
+    marginTop: "70%"
+  },
+  nadra: {
+    marginLeft: 0,
+    marginRight: 0,
+    marginBottom: 10,
+    borderRadius: 20,
+    textAlign: 'right',
+    fontWeight: 20,
+    marginTop: 0,
+    backgroundColor: 'silver',
+  },
+  nadraT: {
+    fontWeight: 'bold',
+    fontSize: 15,
+    marginBottom: 20,
+    marginRight: 20,
+    paddingLeft: 0,
+  },
+  nadraimg: {
+    width: 40,
+    height: 30,
+    padding: 5,
+    margin: 20,
+  },
+  nadraimg1: {
+    marginLeft: 30,
+    width: 160,
+    height: 35,
+    marginBottom: 10,
+    flexDirection: 'row',
+  }
 })

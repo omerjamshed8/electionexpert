@@ -18,32 +18,32 @@ import Print from './pages/nadrarender';
 import HookEffect from './pages/flatlist';
 import DataProvider from './pages/DataProvider';
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Geolocation from '@react-native-community/geolocation';
+// import Geolocation from '@react-native-community/geolocation';
 
-const Context=createContext();
+const Context=React.createContext();
 
 export default function App() {
 
-  const [latitude,setLatitude]=useState(0);
-  const [longitude,setLongitude]=useState(0);
-  const getLocation=()=>{
-    Geolocation.getCurrentPosition(data=>{
-      setLatitude(data.coords.latitude);
-      setLongitude(data.coords.longitude);
-    })
-  }
+  // const [latitude,setLatitude]=useState(0);
+  // const [longitude,setLongitude]=useState(0);
+  // const getLocation=()=>{
+  //   Geolocation.getCurrentPosition(data=>{
+  //     setLatitude(data.coords.latitude);
+  //     setLongitude(data.coords.longitude);
+  //   })
+  // }
 
-  React.useEffect(()=>{
-    getLocation()
-  },[])
+  // React.useEffect(()=>{
+  //   getLocation()
+  // },[])
 
   return (
     // <Bottomnav/>
-    <Context.Provider value={{latitude,longitude}}>
+    // <Context.Provider value={{latitude,longitude}}>
     <DataProvider>
       <MyStack/>
     </DataProvider>
-    </Context.Provider>
+    // </Context.Provider>
     // <HookEffect/>
     //  <Print/>
     );
